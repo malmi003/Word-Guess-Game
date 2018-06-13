@@ -1,0 +1,15 @@
+/* 
+Dark pruce: rgba(68, 63, 65, 1);
+indepence: rgba(66, 80, 97, 1);
+army green: rgba(87, 86, 43, 1);
+grey brown: rgba(164, 143, 122, 1);
+trolley gray: rgba(130, 126, 132, 1);
+*/
+
+body {
+    background-image: url("../images/background-img-wyatt-ryan-351006-unsplash-70-opacity.jpg");
+    background-size:cover;
+}
+.border-primary {
+    border: 3px groove white !important; 
+}
