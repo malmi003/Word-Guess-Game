@@ -24,13 +24,10 @@ SOOOO when a valid/new letter is guessed:
 
 * when started, need to capture each letter pressed in lettersAlreadyGuessed and display on screen
 
+* when correct letter guessed, the underscore is replaced with that letter
+
 ---------------------------*/
-
-/* (randomly?) select word from array of words.
-- each word has its own set of properties to be displayed when it's guessed correctly
-- generate the same number of underscores as the word is long and display under current word
-- when correct letter guessed, the underscore is replaced with that letter */
-
+// -----------------------------------------
 var wordArray = [
     {
         word: "balsam Fir",
@@ -63,6 +60,25 @@ var wordArray = [
     },
 ]
 
+// * need to find way for this to only operate once
+
+
+document.onkeypress = function() {
+//erase start instructions, set win count to zero
+document.querySelector("#instructionsToStart").innerHTML = " ";
+document.querySelector("#winCount").innerHTML = 0;
+
+//reset initial values 
+function resetInitialValues() {
+document.querySelector("#numberOfGuessesRemaining").innerHTML = 12;
+document.querySelector("#lettersGuessed").innerHTML = "Press a key!";
+};
+
+//calling reset function initially 
+resetInitialValues();
+
+
+//-------------set word and Underscores---------
 //select random object out of array
 var randWordIndex = Math.floor(Math.random() * wordArray.length);
 //get word out of the random object that was chosen from array
@@ -80,13 +96,28 @@ for (i = 0; i < wordAsArray.length; i++) {
     underlineString += "_";
     }
 }
+
+//------------prints initial _ _ _ to page---------
 //printing underline string to html page
 function addUnderlineStringToPage() {
     document.querySelector("#underlineString").innerHTML = underlineString;
 }
+//calling addUnderlineStringToPage function
 addUnderlineStringToPage();
 
-console.log(underlineString);
+// * create function to run rest of this, without resetting the word each time
+var letterArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+document.onkeyup = function(event) {
+    var guessedLetter = event.key;
+    //if the guessed letter equals a letter in array
+    if (currentWord.indexOf(guessedLetter) != -1) {
+        
+    }
+    console.log(guessedLetter);
+}
 
+// --------------------------------------------
 //The answer was: (output on page)
-console.log(wordArray[randWordIndex].word);
+console.log(currentWord);
+
+}
