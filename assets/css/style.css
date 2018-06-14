@@ -15,7 +15,7 @@ body {
 .border-primary {
     border: 3px groove white !important; 
 }
-
+/* ------------footer------------ */
 .footer {
     position: absolute;
     left: 0;
@@ -25,6 +25,16 @@ body {
     line-height: 50px; /* Vertically center the text there */
     background-color: #425061;
   }
+
+.footer-small {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto; /* Set the fixed height of the footer here */
+    line-height: auto; /* Vertically center the text there */
+    background-color: #425061;
+}
 
   #underlineString {
    font-size: 1.4em;   
