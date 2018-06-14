@@ -3,11 +3,6 @@
 * watch for any key being pressed to get started (start function)
 
 
-SOOOO when a valid/new letter is guessed:
-    1. number of guesses remaining decreases by one
-    2. letter appears under letters guessed
-    3. if the letter is in the current word, it replaces the underscore
-
 * (randomly?) select word from array of words.
     - each word has its own set of properties to be displayed when it's guessed correctly
     - generate the same number of underscores as the word is long and display under current word
@@ -25,6 +20,11 @@ SOOOO when a valid/new letter is guessed:
 * when started, need to capture each letter pressed in lettersAlreadyGuessed and display on screen
 
 * when correct letter guessed, the underscore is replaced with that letter
+
+SOOOO when a valid/new letter is guessed:
+    1. number of guesses remaining decreases by one
+    2. letter appears under letters guessed
+    3. if the letter is in the current word, it replaces the underscore
 
 ---------------------------*/
 // -----------------------------------------
@@ -132,25 +132,29 @@ document.onkeyup = function (event) {
             guessCount--;
             document.querySelector("#numberOfGuessesRemaining").innerHTML = guessCount;
 
-            //if the guessed letter equals a letter in currentWord
-            var indexOfCurrentWord = currentWord.indexOf(guessedLetter);
-            if (indexOfCurrentWord != -1) {
-                //take that letter, figure out where goes in _ chain, and add it there in 
-                // * need to loop through to make sure catching all letters
-                var underlineStringArray = underlineString.split("");
-                console.log(underlineStringArray);
+            // ............replaces "_" with correct letters...............
+            //if that letter is in the currentWord, go to that index of underlineStringArray and put it in there, update underlineStringArray to that new value, display it to page, repeat
+            var underlineStringArray = underlineString.split("");
+            for (var i in wordAsArray) {
+                var indexOfCurrentWord = wordAsArray.indexOf(guessedLetter);
 
-                underlineStringArray.splice(indexOfCurrentWord, 1, guessedLetter);
+                //if the guessed letter equals a letter in currentWord
+                if (indexOfCurrentWord !== -1) {
+                    //replace "_" with letter
+                    underlineStringArray.splice(indexOfCurrentWord, 1, guessedLetter);
+                    underlineString = underlineStringArray.join("");
+                    addUnderlineStringToPage();
 
+                    wordAsArray.splice(indexOfCurrentWord, 1, "-")
+                    //it's forgetting previous letters guessed...
 
-
+                }
 
             }
-            console.log(underlineStringArray);
 
-        } else {
-            // * make a you lose comments and a try again button that resets everything!!!!
         }
+    } else {
+        // * make a you lose comments and a try again button that resets everything!!!!
     }
 
 

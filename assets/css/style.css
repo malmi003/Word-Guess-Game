@@ -33,7 +33,7 @@ body {
     width: 100%;
     height: auto; /* Set the fixed height of the footer here */
     line-height: auto; /* Vertically center the text there */
-    background-color: #425061;
+    background-color: rgba(68, 63, 65, .7);
 }
 
   #underlineString {
