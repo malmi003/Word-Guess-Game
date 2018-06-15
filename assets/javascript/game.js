@@ -30,62 +30,34 @@ SOOOO when a valid/new letter is guessed:
 * add more objects to array and then remove them from array so you don't get them twice? Then restart - give them option or not
 ---------------------------*/
 // -----------------------------------------
-var wordArray = [
-    {
-        word: "balsam fir",
-        group: "Coniferous",
-        bark: "Smooth, grayish, prominently marked by blisters filled with resin or balsam pitch.",
-        treeImage: "<img src='images/abies-balsamea-15-5-2.jpg' alt='Balsam Fir Tree'>",
-        leafImage: "<img src='images/abies-balsamea-15-5-10.jpg' alt='Balsam Fir Tree'>",
-    },
-    {
-        word: "black spruce",
-        group: "Coniferous",
-        bark: "Grayish to reddish-brown, scaly.",
-        treeImage: "<img src='images/picea-mariana-001.jpg' alt='Black spruce'>",
-        leafImage: "<img src='images/picea-mariana-689-2.jpg' alt='Black spruce'>",
-    },
-    {
-        word: "eastern hemlock",
-        group: "Coniferous",
-        bark: "Deeply divided into narrow rounded ridges; covered with thick, flat scales; cinnamon-red to gray.",
-        treeImage: "<img src='images/tsuga-canadensis-15-6.jpg' alt='Eastern hemlock'>",
-        leafImage: "<img src='images/tsuga-canadensis-15-11.jpg' alt='Eastern hemlock'>",
-    },
 
-    {
-        word: "eastern red cedar",
-        group: "Coniferous",
-        bark: "aka Juniper. Thin, reddish-brown, peeling off in long, vertical shredlike strips.",
-        treeImage: "<img src='images/juniperus-virginiana-48-1.jpg' alt='Eastern red cedar (juniper)'>",
-        leafImage: "<img src='images/juniperus-virginiana-643287-11.jpg' alt='Eastern red cedar (juniper)'>",
-    },
-]
 
 // *** document.onkeypress = function () {
-//erase start instructions, set win count to zero
+//erase start instructions, set win count to zero, reset alphabetArray
 document.querySelector("#instructionsToStart").innerHTML = " ";
 document.querySelector("#winCount").innerHTML = 0;
 
-//----------------reset functions----------------
+//----------------functions----------------
 
 //..............reset guesses..............
 function resetInitialValues() {
-    document.querySelector("#numberOfGuessesRemaining").innerHTML = 2;
+    document.querySelector("#numberOfGuessesRemaining").innerHTML = 8;
     document.querySelector("#lettersGuessed").innerHTML = "<small>incorrect guesses go here</small>";
     document.querySelector("#underlineString").innerHTML = "";
+    allLettersGuessed = "";
 };
+
 //..............set word and Underscores........
 function setWordAndUs() {
     //select random object out of array
-    randWordIndex = Math.floor(Math.random() * wordArray.length);
+    randIndex = Math.floor(Math.random() * wordArray.length);
     //get word out of the random object that was chosen from array
-    currentWord = wordArray[randWordIndex].word;
-    //output same number of _ as there are letters in word (need to takes space into consideration)
+    currentWord = wordArray[randIndex].word;
+    
 
-    //turned word into string so could find # of chars
+    //turned word into string
     wordAsArray = currentWord.split("");
-    // * wrap in function so runs once valid letter has been guessed
+    underlineString = "";
     for (i = 0; i < wordAsArray.length; i++) {
         //if sttmt so each " " character is reflected as space in underline chain
         if (wordAsArray[i] === " ") {
@@ -95,20 +67,104 @@ function setWordAndUs() {
         }
     }
 }
+
 //...........printing underline string to page..........
 function addUnderlineStringToPage() {
     document.querySelector("#underlineString").innerHTML = underlineString;
 }
 
+//...........what to do on win..........
+//---------once you guess the word correctly---------
+// * && make winner thing so cant keep guessing letters
+// * if underlineString does not contain any "_", game is over, create if loop outside of counter loop so if "underline string contains _ do this, otherwise stop and restart"
+
+// * - display congrats, change picture, add tree content
+// * - reset counter, increase win count, change word.
+function checkForWin() {
+    if (underlineString.indexOf("_") === -1) {
+        winCount++;
+        document.querySelector("#winCount").innerHTML = winCount; 
+        console.log("you win!");
+        resetInitialValues();
+        setWordAndUs();
+        addUnderlineStringToPage();
+        console.log(currentWord);
+        alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        //show footer and swipe through pictures and facts
+        //need to change to previous array
+        var imageName = previousArray.treeImage;
+        setImage("assets/images/" + imageName);
+        document.querySelector("#nameOfTree").innerHTML = previousArray.word;
+        document.querySelector("#status").innerHTML = "Nice Guessing!"
+        document.querySelector("#tryAgain").innerHTML = "The next word is ready for you →"
+    }
+}
+
+//...........what to do on lose..........
+function checkForLoss() {
+    if (guessCount == 0) {
+        console.log("you lose")
+        resetInitialValues();
+        setWordAndUs();
+        addUnderlineStringToPage();
+        console.log(currentWord);
+        alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        //replace img with you lose
+        setImage("assets/images/markus-spiske-603099-unsplash.jpg");
+        document.querySelector("#status").innerHTML = "You Lose"
+        document.querySelector("#tryAgain").innerHTML = "The next word is ready for you →"
+    }
+
+
+}
+//...........change display image..........
+function setImage(imageLocation) {
+    document.querySelector("#mainImage").setAttribute("src",imageLocation)
+}
 //-------------declaring variables--------------
-var randWordIndex = 0;
+var randIndex = 0;
+var previousArray = 0;
 var currentWord = "";
 var underlineString = "";
-var wordAsArray = [];
+var wordAsArray = "";
 var allLettersGuessed = "";
+var guessCount = 0;
+var winCount = 0;
 
 
 //-------------declaring arrays------------
+var wordArray = [
+    {
+        word: "balsam fir",
+        group: "Coniferous",
+        bark: "Smooth, grayish, prominently marked by blisters filled with resin or balsam pitch.",
+        treeImage: "abies-balsamea-15-5-2.jpg",
+        leafImage: "abies-balsamea-15-5-10.jpg",
+    },
+    {
+        word: "black spruce",
+        group: "Coniferous",
+        bark: "Grayish to reddish-brown, scaly.",
+        treeImage: "picea-mariana-001.jpg",
+        leafImage: "picea-mariana-689-2.jpg",
+    },
+    {
+        word: "eastern hemlock",
+        group: "Coniferous",
+        bark: "Deeply divided into narrow rounded ridges; covered with thick, flat scales; cinnamon-red to gray.",
+        treeImage: "tsuga-canadensis-15-6.jpg",
+        leafImage: "tsuga-canadensis-15-11.jpg",
+    },
+
+    {
+        word: "eastern red cedar",
+        group: "Coniferous",
+        bark: "aka Juniper. Thin, reddish-brown, peeling off in long, vertical shredlike strips.",
+        treeImage: "juniperus-virginiana-48-1.jpg",
+        leafImage: "juniperus-virginiana-643287-11.jpg",
+    },
+]
+
 var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 //-------------calling initial functions------------
@@ -117,21 +173,11 @@ setWordAndUs();
 addUnderlineStringToPage();
 console.log(currentWord);
 
-//-------------watching for keystroke to start game function declared below------------
+//-------------watching for keystroke to start game------------
 document.onkeyup = function (event) {
-    gameFunction();
-    checkForWin();
-    checkForLoss();
-}
-//set the word and underscore function
-// find current # of guesses,
-var guessCount = document.querySelector("#numberOfGuessesRemaining").innerHTML;
+    guessCount = document.querySelector("#numberOfGuessesRemaining").innerHTML;
 
-function gameFunction() {
-    // if (guessedLetter is in alphArray) {add to allLettersGuessed && remove guessedLetter from array && reduce number of guesses}
-
-
-    // stop the ability to keep guessing letters, adding to string, reducing count, etc. 
+    // function gameFunction() {
 
     if (guessCount > 0) {
         var guessedLetter = event.key;
@@ -177,34 +223,13 @@ function gameFunction() {
 
         }
     }
+    previousArray = wordArray[randIndex];
+    checkForWin();
+    checkForLoss();
 }
 
-//---------once you guess the word correctly---------
-// * && make winner thing so cant keep guessing letters
-// * if underlineString does not contain any "_", game is over, create if loop outside of counter loop so if "underline string contains _ do this, otherwise stop and restart"
-
-// * - display congrats, change picture, add tree content
-// * - reset counter, increase win count, change word.
-function checkForWin() {
-    if (underlineString.indexOf("_") === -1) {
-        console.log("you win!");
-        resetInitialValues();
-        setWordAndUs();
-        addUnderlineStringToPage();
-        // runTheDamnThing();
-        console.log(underlineString);
-
-    }
-}
-
-//---------if you run out of guesses---------
-function checkForLoss() {
-    if (guessCount == 0) {
-        console.log("you lose")
-    }
 
 
-}
 
 
 // * make a you lose comments and a try again button that resets everything!!!!

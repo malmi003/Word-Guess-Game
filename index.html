@@ -11,7 +11,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <!-- <script src="assets/javascript/game.js"></script> -->
-    <script src="assets/javascript/game.js" defer></script>
+    <script src="assets/javascript/game.js" async></script>
 
 </head>
 
@@ -29,9 +29,12 @@
         <!-- main body -->
         <article class="row">
             <div class="col-sm-6 border border-primary">
-                <img class="img-thumbnail w-75 m-2" src="assets/images/default-img-gabriel-jimenez-150063-unsplash.jpg">
-                <footer class="footer-small">
-                    <p>Information taken from the Minnesota DNR website, pictures taken from MinnesotaWildflowers.info</p>
+                <h3 id="nameOfTree"></h3>
+                <img id="mainImage"class="img-thumbnail w-75 m-2" src="assets/images/default-img-gabriel-jimenez-150063-unsplash.jpg">
+                <h2 id="status">Press any key to begin!</h2>
+                <p id="tryAgain"></p>
+                <footer class="footer-small d-none">
+                    <p>Information taken from the Minnesota DNR website, pictures taken from MinnesotaWildflowers.info and Unsplash.com</p>
                 </footer>
             </div>
             <div class="col-sm-6 border border-primary">
