@@ -8,12 +8,29 @@ white: #D5CCC2;
 */
 
 body {
-    background-image: url("../images/background-img-wyatt-ryan-351006-unsplash-70-opacity.jpg");
+    background-image: url("../images/background-img-wyatt-ryan-351006-unsplash-45-opacity.jpg");
     background-size:cover;
-    color: #D5CCC2;
+    color: #CDC1B6;
+}
+header h1 {
+    margin-top: 1em;
+    color: rgba(66, 80, 97, 1);
+    font-size: 3em;
+    font-family: 'Roboto', sans-serif;
+}
+header h2 {
+    color: rgba(66, 80, 97, 1);
+    font-size: 2em;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 2em;
+    font-style: italic;
+}
+h3 {
+    padding-top: 1em;
+    font-size: 1.4em;
 }
 .border-primary {
-    border: 3px groove white !important; 
+    border: 3px groove #425061 !important; 
 }
 /* ------------footer------------ */
 .footer {
@@ -43,4 +60,8 @@ body {
 
   .col-md-6 {
     background-color: rgba(68, 63, 65, .5);
+  }
+
+  #status {
+      font-style: italic;
   }

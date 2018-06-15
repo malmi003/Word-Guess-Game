@@ -19,7 +19,7 @@
 //..............reset guesses..............
 function resetInitialValues() {
     document.querySelector("#numberOfGuessesRemaining").innerHTML = 10;
-    document.querySelector("#lettersGuessed").innerHTML = "<small>incorrect guesses go here</small>";
+    document.querySelector("#lettersGuessed").innerHTML = "<small>incorrect guesses will show up here</small>";
     document.querySelector("#underlineString").innerHTML = "";
     allLettersGuessed = "";
 
@@ -72,7 +72,7 @@ function checkForWin() {
         setImage("assets/images/" + imageName);
         document.querySelector("#nameOfTree").innerHTML = previousArray.word;
         document.querySelector("#status").innerHTML = "Nice Guessing!"
-        document.querySelector("#tryAgain").innerHTML = "Your next word is ready for you →"
+        document.querySelector("#tryAgain").innerHTML = "Your next word has been re-tree-ved →"
     }
 }
 
@@ -86,8 +86,8 @@ function checkForLoss() {
         //replace img with you lose
         setImage("assets/images/markus-spiske-603099-unsplash.jpg");
         document.querySelector("#nameOfTree").innerHTML = "";
-        document.querySelector("#status").innerHTML = "You Lose"
-        document.querySelector("#tryAgain").innerHTML = "Don't fret. Your next word is ready for you →"
+        document.querySelector("#status").innerHTML = "You Lose!"
+        document.querySelector("#tryAgain").innerHTML = "Not time to re-tree-t yet! Your next word is ready for you →"
         document.querySelector("#nameOfLoserTree").innerHTML = "The answer was:";
         document.querySelector("#nameOfLoserTree2").innerHTML = previousArray.word;
     }
@@ -139,6 +139,48 @@ var wordArray = [
         bark: "aka Juniper. Thin, reddish-brown, peeling off in long, vertical shredlike strips.",
         treeImage: "juniperus-virginiana-48-1.jpg",
         leafImage: "juniperus-virginiana-643287-11.jpg",
+    },
+    {
+        word: "eastern white pine",
+        group: "Coniferous",
+        bark: "Thin, smooth, and greenish gray on young trees, but thick, deeply furrowed, and grayish brown on older trees.",
+        treeImage: "pinus-strobus-85.jpg",
+        leafImage: "pinus-strobus-928-13.jpg",
+    },
+    {
+        word: "jack pine",
+        group: "Coniferous",
+        bark: "Dull red-brown; irregularly divided into small scales.",
+        treeImage: "pinus-banksiana-678-3.jpg",
+        leafImage: "pinus-banksiana-7098-1.jpg",
+    },
+    {
+        word: "northern white cedar",
+        group: "Coniferous",
+        bark: "Gray to reddish brown, separating in long, vertical, narrow shreddy strips.",
+        treeImage: "thuja-occidentalis-678243-1.jpg",
+        leafImage: "thuja-occidentalis-398-2.jpg",
+    },
+    {
+        word: "red pine",
+        group: "Coniferous",
+        bark: "aka Norway Pine. Becomes divided into large reddish brown plates as it matures, which gives tree its characteristic appearance and its common name, red pine.",
+        treeImage: "pinus-resinosa-98207878.jpg",
+        leafImage: "pinus-resinosa-005.jpg",
+    },
+    {
+        word: "tamarack",
+        group: "Coniferous",
+        bark: "Rough with thin, reddish brown scales. Twigs are light brown and covered with numerous tiny spurs or short branches.",
+        treeImage: "larix-laricina-4329-2.jpg",
+        leafImage: "larix-laricina-45-1.jpg",
+    },
+    {
+        word: "white spruce",
+        group: "Coniferous",
+        bark: "Dark gray or gray-brown and scaly.",
+        treeImage: "picea-glauca-005.jpg",
+        leafImage: "picea-glauca-75-2.jpg",
     },
 ]
 
