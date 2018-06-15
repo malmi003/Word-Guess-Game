@@ -28,32 +28,34 @@
 
         <!-- main body -->
         <article class="row">
-            <div class="col-sm-6 border border-primary">
+            <div class="col-md-6 border border-primary">
                 <h3 id="nameOfTree"></h3>
-                <img id="mainImage"class="img-thumbnail w-75 m-2" src="assets/images/default-img-gabriel-jimenez-150063-unsplash.jpg">
-                <h2 id="status">Press any key to begin!</h2>
+                <img id="mainImage"class="img-thumbnail w-75 m-2 mh-75" src="assets/images/default-img-gabriel-jimenez-150063-unsplash.jpg">
+                <h2 id="status">Start guessing!</h2>
+                <h3 id="nameOfLoserTree"></h3>
+                <p id="nameOfLoserTree2"></p>
                 <p id="tryAgain"></p>
                 <footer class="footer-small d-none">
                     <p>Information taken from the Minnesota DNR website, pictures taken from MinnesotaWildflowers.info and Unsplash.com</p>
                 </footer>
             </div>
-            <div class="col-sm-6 border border-primary">
-                <p id="instructionsToStart">Press any key to get started!</p>
+            <div class="col-md-6 border border-primary">
                 <h3>Win Count: </h3>
                 <p id="winCount"></p>
                 <h3>Current Word: </h3>
                 <p id="underlineString"> </p>
-                <h3>Number of guesses remaining: </h3>
+                <h3>Number of incorrect guesses remaining: </h3>
                 <p id="numberOfGuessesRemaining"></p>
                 <h3>Letters already guessed: </h3>
                 <p id="lettersGuessed"></p>
+                
             </div>
 
 
         </article>
 
         <!--footer -->
-        <footer role="contentinfo" class="footer">
+        <footer role="contentinfo" class="footer d-none">
             <p>Copyright &copy;</p>
         </footer>
     </div>

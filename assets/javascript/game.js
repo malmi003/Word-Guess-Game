@@ -4,47 +4,25 @@
 * need to update README
 
 
-- (randomly?) select word from array of words.
-    - each word has its own set of properties to be displayed when it's guessed correctly
-    - generate the same number of underscores as the word is long and display under current word
-    - when correct letter guessed, the underscore is replaced with that letter
 
-- set number of guesses equal to 12 when new game begins
-    - reduce number of guesses by one when each VALID letter character is guessed, does not reduce when letter already guessed (maybe create alphabet array), remove option once it's guessed
 
-- each time a valid char letter is guessed for the first time, it is displayed in browser
+* once word is guessed correctly, sound plays
 
-* everything resets once word is guessed correctly
 
-* once word is guessed correctly, picture is displayed and sound plays
-
-- when started, need to capture each letter pressed in lettersAlreadyGuessed and display on screen
-
-- when correct letter guessed, the underscore is replaced with that letter
-
-SOOOO when a valid/new letter is guessed:
-    1. number of guesses remaining decreases by one
-    2. letter appears under letters guessed
-    3. if the letter is in the current word, it replaces the underscore
-
-* add more objects to array and then remove them from array so you don't get them twice? Then restart - give them option or not
+* for future - add more objects to array and then remove them from array so you don't get them twice? Then restart - give them option or not
 ---------------------------*/
 // -----------------------------------------
 
-
-// *** document.onkeypress = function () {
-//erase start instructions, set win count to zero, reset alphabetArray
-document.querySelector("#instructionsToStart").innerHTML = " ";
-document.querySelector("#winCount").innerHTML = 0;
 
 //----------------functions----------------
 
 //..............reset guesses..............
 function resetInitialValues() {
-    document.querySelector("#numberOfGuessesRemaining").innerHTML = 8;
+    document.querySelector("#numberOfGuessesRemaining").innerHTML = 10;
     document.querySelector("#lettersGuessed").innerHTML = "<small>incorrect guesses go here</small>";
     document.querySelector("#underlineString").innerHTML = "";
     allLettersGuessed = "";
+
 };
 
 //..............set word and Underscores........
@@ -53,7 +31,7 @@ function setWordAndUs() {
     randIndex = Math.floor(Math.random() * wordArray.length);
     //get word out of the random object that was chosen from array
     currentWord = wordArray[randIndex].word;
-    
+
 
     //turned word into string
     wordAsArray = currentWord.split("");
@@ -83,12 +61,10 @@ function addUnderlineStringToPage() {
 function checkForWin() {
     if (underlineString.indexOf("_") === -1) {
         winCount++;
-        document.querySelector("#winCount").innerHTML = winCount; 
-        console.log("you win!");
+        document.querySelector("#winCount").innerHTML = winCount;
         resetInitialValues();
         setWordAndUs();
         addUnderlineStringToPage();
-        console.log(currentWord);
         alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         //show footer and swipe through pictures and facts
         //need to change to previous array
@@ -96,30 +72,31 @@ function checkForWin() {
         setImage("assets/images/" + imageName);
         document.querySelector("#nameOfTree").innerHTML = previousArray.word;
         document.querySelector("#status").innerHTML = "Nice Guessing!"
-        document.querySelector("#tryAgain").innerHTML = "The next word is ready for you →"
+        document.querySelector("#tryAgain").innerHTML = "Your next word is ready for you →"
     }
 }
 
 //...........what to do on lose..........
 function checkForLoss() {
     if (guessCount == 0) {
-        console.log("you lose")
         resetInitialValues();
         setWordAndUs();
         addUnderlineStringToPage();
-        console.log(currentWord);
         alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         //replace img with you lose
         setImage("assets/images/markus-spiske-603099-unsplash.jpg");
+        document.querySelector("#nameOfTree").innerHTML = "";
         document.querySelector("#status").innerHTML = "You Lose"
-        document.querySelector("#tryAgain").innerHTML = "The next word is ready for you →"
+        document.querySelector("#tryAgain").innerHTML = "Don't fret. Your next word is ready for you →"
+        document.querySelector("#nameOfLoserTree").innerHTML = "The answer was:";
+        document.querySelector("#nameOfLoserTree2").innerHTML = previousArray.word;
     }
 
 
 }
 //...........change display image..........
 function setImage(imageLocation) {
-    document.querySelector("#mainImage").setAttribute("src",imageLocation)
+    document.querySelector("#mainImage").setAttribute("src", imageLocation)
 }
 //-------------declaring variables--------------
 var randIndex = 0;
@@ -168,10 +145,15 @@ var wordArray = [
 var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 //-------------calling initial functions------------
+// document.querySelector("#status").innerHTML = "";
+document.querySelector("#winCount").innerHTML = "0";
 resetInitialValues();
 setWordAndUs();
 addUnderlineStringToPage();
-console.log(currentWord);
+
+// document.onkeyup = function() {
+//     console.log("work");
+// }
 
 //-------------watching for keystroke to start game------------
 document.onkeyup = function (event) {
@@ -227,17 +209,3 @@ document.onkeyup = function (event) {
     checkForWin();
     checkForLoss();
 }
-
-
-
-
-
-// * make a you lose comments and a try again button that resets everything!!!!
-
-// ............ ...............
-
-
-
-// --------------------------------------------
-//The answer was: (output on page)
-

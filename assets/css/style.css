@@ -41,4 +41,6 @@ body {
    letter-spacing: .5em;   
   }
 
-  /* increase line spacing on underscores */
+  .col-md-6 {
+    background-color: rgba(68, 63, 65, .5);
+  }
