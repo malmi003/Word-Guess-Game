@@ -1,31 +1,33 @@
 /* -------------------------
 
 * watch for any key being pressed to get started (start function)
+* need to update README
 
 
-* (randomly?) select word from array of words.
+- (randomly?) select word from array of words.
     - each word has its own set of properties to be displayed when it's guessed correctly
     - generate the same number of underscores as the word is long and display under current word
     - when correct letter guessed, the underscore is replaced with that letter
 
-* set number of guesses equal to 12 when new game begins
+- set number of guesses equal to 12 when new game begins
     - reduce number of guesses by one when each VALID letter character is guessed, does not reduce when letter already guessed (maybe create alphabet array), remove option once it's guessed
 
-* each time a valid char letter is guessed for the first time, it is displayed in browser
+- each time a valid char letter is guessed for the first time, it is displayed in browser
 
 * everything resets once word is guessed correctly
 
 * once word is guessed correctly, picture is displayed and sound plays
 
-* when started, need to capture each letter pressed in lettersAlreadyGuessed and display on screen
+- when started, need to capture each letter pressed in lettersAlreadyGuessed and display on screen
 
-* when correct letter guessed, the underscore is replaced with that letter
+- when correct letter guessed, the underscore is replaced with that letter
 
 SOOOO when a valid/new letter is guessed:
     1. number of guesses remaining decreases by one
     2. letter appears under letters guessed
     3. if the letter is in the current word, it replaces the underscore
 
+* add more objects to array and then remove them from array so you don't get them twice? Then restart - give them option or not
 ---------------------------*/
 // -----------------------------------------
 var wordArray = [
@@ -60,121 +62,157 @@ var wordArray = [
     },
 ]
 
-// * need to find way for this to only operate once
-
-
-// document.onkeypress = function () {
+// *** document.onkeypress = function () {
 //erase start instructions, set win count to zero
 document.querySelector("#instructionsToStart").innerHTML = " ";
 document.querySelector("#winCount").innerHTML = 0;
 
-//reset initial values 
+//----------------reset functions----------------
+
+//..............reset guesses..............
 function resetInitialValues() {
-    document.querySelector("#numberOfGuessesRemaining").innerHTML = 12;
-    document.querySelector("#lettersGuessed").innerHTML = "Press a key!";
+    document.querySelector("#numberOfGuessesRemaining").innerHTML = 2;
+    document.querySelector("#lettersGuessed").innerHTML = "<small>incorrect guesses go here</small>";
+    document.querySelector("#underlineString").innerHTML = "";
 };
+//..............set word and Underscores........
+function setWordAndUs() {
+    //select random object out of array
+    randWordIndex = Math.floor(Math.random() * wordArray.length);
+    //get word out of the random object that was chosen from array
+    currentWord = wordArray[randWordIndex].word;
+    //output same number of _ as there are letters in word (need to takes space into consideration)
 
-//calling reset function initially 
-resetInitialValues();
-
-
-//-------------set word and Underscores---------
-//select random object out of array
-var randWordIndex = Math.floor(Math.random() * wordArray.length);
-//get word out of the random object that was chosen from array
-var currentWord = wordArray[randWordIndex].word;
-//output same number of _ as there are letters in word (need to takes space into consideration)
-var underlineString = "";
-//turned word into string so could find spaces
-var wordAsArray = currentWord.split("");
-// * wrap in function so runs once valid letter has been guessed
-for (i = 0; i < wordAsArray.length; i++) {
-    //create if sttmt so each " " character is reflected as space in underline chain
-    if (wordAsArray[i] === " ") {
-        underlineString += " ";
-    } else {
-        underlineString += "_";
+    //turned word into string so could find # of chars
+    wordAsArray = currentWord.split("");
+    // * wrap in function so runs once valid letter has been guessed
+    for (i = 0; i < wordAsArray.length; i++) {
+        //if sttmt so each " " character is reflected as space in underline chain
+        if (wordAsArray[i] === " ") {
+            underlineString += " ";
+        } else {
+            underlineString += "_";
+        }
     }
 }
-
-//------------prints initial _ _ _ to page---------
-//printing underline string to html page
+//...........printing underline string to page..........
 function addUnderlineStringToPage() {
     document.querySelector("#underlineString").innerHTML = underlineString;
 }
-//calling addUnderlineStringToPage function
-addUnderlineStringToPage();
 
-// * create function to run rest of this, without resetting the word each time
+//-------------declaring variables--------------
+var randWordIndex = 0;
+var currentWord = "";
+var underlineString = "";
+var wordAsArray = [];
+var allLettersGuessed = "";
 
-//-------------dealing with letter once guessed------------
+
+//-------------declaring arrays------------
 var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-// ............adds to letters guessed list...............
-var allLettersGuessed = "";
+//-------------calling initial functions------------
+resetInitialValues();
+setWordAndUs();
+addUnderlineStringToPage();
+console.log(currentWord);
+
+//-------------watching for keystroke to start game function declared below------------
 document.onkeyup = function (event) {
+    gameFunction();
+    checkForWin();
+    checkForLoss();
+}
+//set the word and underscore function
+// find current # of guesses,
+var guessCount = document.querySelector("#numberOfGuessesRemaining").innerHTML;
+
+function gameFunction() {
     // if (guessedLetter is in alphArray) {add to allLettersGuessed && remove guessedLetter from array && reduce number of guesses}
 
-    // find current # of guesses,
-    var guessCount = document.querySelector("#numberOfGuessesRemaining").innerHTML;
+
+    // stop the ability to keep guessing letters, adding to string, reducing count, etc. 
+
     if (guessCount > 0) {
         var guessedLetter = event.key;
-        var indexOfGuessedLetter = alphabetArray.indexOf(guessedLetter);
-        if (indexOfGuessedLetter != -1) {
-            //remove from alphabetArray
-            alphabetArray.splice(indexOfGuessedLetter, 1);
-            //add to guess chain and display on page
-            allLettersGuessed += guessedLetter;
-            allLettersGuessedArray = allLettersGuessed.split("");
-            allLettersGuessedRejoined = allLettersGuessedArray.join(" ");
-            document.querySelector("#lettersGuessed").innerHTML = allLettersGuessedRejoined;
-            // reduce guesses by 1 each time and put back in browser
-            guessCount--;
-            document.querySelector("#numberOfGuessesRemaining").innerHTML = guessCount;
+        var alphabetIndex = alphabetArray.indexOf(guessedLetter);
+        if (alphabetIndex != -1) {
+            //remove letter from alphabetArray
+            alphabetArray.splice(alphabetIndex, 1);
 
             // ............replaces "_" with correct letters...............
             //if that letter is in the currentWord, go to that index of underlineStringArray and put it in there, update underlineStringArray to that new value, display it to page, repeat
-            var underlineStringArray = underlineString.split("");
-            for (var i in wordAsArray) {
-                var indexOfCurrentWord = wordAsArray.indexOf(guessedLetter);
 
-                //if the guessed letter equals a letter in currentWord
-                if (indexOfCurrentWord !== -1) {
-                    //replace "_" with letter
-                    underlineStringArray.splice(indexOfCurrentWord, 1, guessedLetter);
-                    underlineString = underlineStringArray.join("");
-                    addUnderlineStringToPage();
+            var indexOfCurrentWord = currentWord.indexOf(guessedLetter);
 
-                    wordAsArray.splice(indexOfCurrentWord, 1, "-")
-                    //it's forgetting previous letters guessed...
+            //if the guessed letter equals a letter in currentWord
+            if (indexOfCurrentWord !== -1) {
+                var underlineStringArray = underlineString.split("");
+
+                for (var i in wordAsArray) {
+                    var indexOfCurrentWord2 = wordAsArray.indexOf(guessedLetter);
+                    if (indexOfCurrentWord2 !== -1) {
+                        //replace "_" with letter
+                        underlineStringArray.splice(indexOfCurrentWord2, 1, guessedLetter);
+                        underlineString = underlineStringArray.join("");
+                        addUnderlineStringToPage();
+
+                        wordAsArray.splice(indexOfCurrentWord2, 1, "-")
+                    }
 
                 }
+            } else {
 
+                // this should only contain letters that were not in current word
+                allLettersGuessed += guessedLetter;
+                allLettersGuessedArray = allLettersGuessed.split("");
+                allLettersGuessedRejoined = allLettersGuessedArray.join(" ");
+                document.querySelector("#lettersGuessed").innerHTML = allLettersGuessedRejoined;
+                // reduce guesses by 1 each time and put back in browser
+                guessCount--;
+                document.querySelector("#numberOfGuessesRemaining").innerHTML = guessCount;
             }
 
+
+
         }
-    } else {
-        // * make a you lose comments and a try again button that resets everything!!!!
+    }
+}
+
+//---------once you guess the word correctly---------
+// * && make winner thing so cant keep guessing letters
+// * if underlineString does not contain any "_", game is over, create if loop outside of counter loop so if "underline string contains _ do this, otherwise stop and restart"
+
+// * - display congrats, change picture, add tree content
+// * - reset counter, increase win count, change word.
+function checkForWin() {
+    if (underlineString.indexOf("_") === -1) {
+        console.log("you win!");
+        resetInitialValues();
+        setWordAndUs();
+        addUnderlineStringToPage();
+        // runTheDamnThing();
+        console.log(underlineString);
+
+    }
+}
+
+//---------if you run out of guesses---------
+function checkForLoss() {
+    if (guessCount == 0) {
+        console.log("you lose")
     }
 
 
-    // ............ ...............
-
-
-
-    //take that letter and put it where it belongs in _ chain
-    // for (i = 0; i < wordAsArray.length; i++) {
-    //     //create if statement so each " " character is reflected as space in underline chain
-    //     if (wordAsArray[i] === " ") {
-    //         underlineString += " ";
-    //     } else {
-    //         underlineString += "_";
-    //     }
-    // }
 }
+
+
+// * make a you lose comments and a try again button that resets everything!!!!
+
+// ............ ...............
+
+
 
 // --------------------------------------------
 //The answer was: (output on page)
-console.log(currentWord);
 
-// }
