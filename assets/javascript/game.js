@@ -53,11 +53,8 @@ function addUnderlineStringToPage() {
 
 //...........what to do on win..........
 //---------once you guess the word correctly---------
-// * && make winner thing so cant keep guessing letters
-// * if underlineString does not contain any "_", game is over, create if loop outside of counter loop so if "underline string contains _ do this, otherwise stop and restart"
 
-// * - display congrats, change picture, add tree content
-// * - reset counter, increase win count, change word.
+// * - add tree content
 function checkForWin() {
     if (underlineString.indexOf("_") === -1) {
         winCount++;
@@ -193,9 +190,9 @@ resetInitialValues();
 setWordAndUs();
 addUnderlineStringToPage();
 
-// document.onkeyup = function() {
-//     console.log("work");
-// }
+document.onkeyup = function() {
+    console.log("work");
+}
 
 //-------------watching for keystroke to start game------------
 document.onkeyup = function (event) {
